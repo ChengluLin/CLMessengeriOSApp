@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class RegisterViewController: UIViewController {
     
@@ -108,9 +109,9 @@ class RegisterViewController: UIViewController {
 //                                                            style: .done,
 //                                                            target: self,
 //                                                            action: #selector(didTapRegister))
-//        RegisterButton.addTarget(self,
-//                              action: #selector(RegisterButtonTapped),
-//                              for: .touchUpInside)
+        RegisterButton.addTarget(self,
+                              action: #selector(RegisterButtonTapped),
+                              for: .touchUpInside)
         
         firstNameField.delegate = self
         lastNameField.delegate = self
@@ -191,6 +192,17 @@ class RegisterViewController: UIViewController {
         }
         
         // Firebase Login
+        
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            guard let result = authResult,
+                error == nil else {
+                print("Error cureationg user")
+                return
+            }
+            
+            let user = result.user
+                print("Created User: \(user)")
+        }
 
     }
     
