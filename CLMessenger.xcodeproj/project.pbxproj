@@ -22,6 +22,7 @@
 		BD095F7C2C29643A00725149 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095F7B2C29643A00725149 /* ProfileViewController.swift */; };
 		BD095F7F2C2AA93A00725149 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095F7E2C2AA93A00725149 /* Extensions.swift */; };
 		BD095F812C36CCD200725149 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BD095F802C36CCD200725149 /* GoogleService-Info.plist */; };
+		BD095FA32C3BF91100725149 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095FA22C3BF91100725149 /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		BD095F7B2C29643A00725149 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BD095F7E2C2AA93A00725149 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BD095F802C36CCD200725149 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BD095FA22C3BF91100725149 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 				BD095F572C284C8600725149 /* AppDelegate.swift */,
 				BD095F592C284C8600725149 /* SceneDelegate.swift */,
 				BD095F7E2C2AA93A00725149 /* Extensions.swift */,
+				BD095FA22C3BF91100725149 /* DatabaseManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				BD095F7A2C29642500725149 /* NewConversationViewController.swift in Sources */,
 				BD095F5C2C284C8600725149 /* ConversationsViewController.swift in Sources */,
 				BD095F782C2963E400725149 /* VideoPlayerViewController.swift in Sources */,
+				BD095FA32C3BF91100725149 /* DatabaseManager.swift in Sources */,
 				BD095F7F2C2AA93A00725149 /* Extensions.swift in Sources */,
 				BD095F582C284C8600725149 /* AppDelegate.swift in Sources */,
 				BD095F7C2C29643A00725149 /* ProfileViewController.swift in Sources */,

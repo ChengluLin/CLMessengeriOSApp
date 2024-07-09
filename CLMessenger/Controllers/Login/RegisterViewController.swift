@@ -18,7 +18,7 @@ class RegisterViewController: UIViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person")
+        imageView.image = UIImage(systemName: "person.circle")
         imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
@@ -144,7 +144,7 @@ class RegisterViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.frame = view.bounds
-        let size = scrollView.width/5
+        let size = scrollView.width/3
         imageView.frame = CGRect(x: (scrollView.width-size)/2,
                                  y: 30,
                                  width: size,
@@ -193,7 +193,8 @@ class RegisterViewController: UIViewController {
         
         // Firebase Login
         
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+            guard let self = self else { return }
             guard let result = authResult,
                 error == nil else {
                 print("Error cureationg user")
@@ -202,6 +203,8 @@ class RegisterViewController: UIViewController {
             
             let user = result.user
                 print("Created User: \(user)")
+            self.navigationController?.dismiss(animated: true)
+
         }
 
     }
