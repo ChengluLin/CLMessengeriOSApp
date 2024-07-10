@@ -193,25 +193,49 @@ class RegisterViewController: UIViewController {
         
         // Firebase Login
         
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+        DatabaseManager.shared.userExists(with: email) { [weak self] exists in
             guard let self = self else { return }
-            guard let result = authResult,
-                error == nil else {
-                print("Error cureationg user")
+            
+            guard exists else {
+                // 用戶已存在
+                self.alertUserLoginError(message: "該電子郵件地址的使用者帳戶似乎已存在。")
                 return
             }
             
-            let user = result.user
-                print("Created User: \(user)")
-            self.navigationController?.dismiss(animated: true)
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                
+                if let error = error as NSError? {
+                    if error.code == AuthErrorCode.emailAlreadyInUse.rawValue {
+                        // Email is already registered
+                        print("被註冊拉！！")
+                        self.alertUserLoginError(message: "該電子郵件地址的使用者帳戶似乎已存在。")
+                    }
+                }
+                
+                guard authResult != nil,
+                    error == nil else {
+                    print("Error cureationg user")
+                    return
+                }
+                
+    //            let user = result.user
+    //                print("Created User: \(user)")
+                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName,
+                                                                    lastName: lastName,
+                                                                    emailAddress: email))
+                
+                self.navigationController?.dismiss(animated: true)
 
+            }
         }
-
     }
     
-    func alertUserLoginError() {
-        let alert = UIAlertController(title: "提醒", message: "請將資料填寫完整註冊資料", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "確認", style: .cancel, handler: nil))
+    func alertUserLoginError(message: String = "請將資料填寫完整註冊資料") {
+        let alert = UIAlertController(title: "提醒", 
+                                      message: message,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "確認", 
+                                      style: .cancel, handler: nil))
         present(alert, animated: true)
     }
     
