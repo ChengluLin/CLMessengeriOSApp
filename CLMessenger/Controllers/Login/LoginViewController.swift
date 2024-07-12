@@ -129,6 +129,7 @@ class LoginViewController: UIViewController {
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             guard let self = self else { return }
             guard let result = authResult, error == nil else {
+                /// 登入出現錯誤，密碼不正確或信箱不存在
                 print("Failed to log in user with email: \(email)")
                 return
             }

@@ -204,11 +204,19 @@ class RegisterViewController: UIViewController {
             
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 
+//                guard let error != error as NSError?,
+//                      error.code != AuthErrorCode.emailAlreadyInUse.rawValue else {
+//                    // Email is already registered
+//                    print("被註冊拉！！")
+//                    self.alertUserLoginError(message: "該電子郵件地址的使用者帳戶似乎已存在。")
+//                          return
+//                      }
+                
                 if let error = error as NSError? {
                     if error.code == AuthErrorCode.emailAlreadyInUse.rawValue {
                         // Email is already registered
-                        print("被註冊拉！！")
                         self.alertUserLoginError(message: "該電子郵件地址的使用者帳戶似乎已存在。")
+                        return
                     }
                 }
                 
