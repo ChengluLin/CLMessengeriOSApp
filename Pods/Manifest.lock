@@ -102,19 +102,37 @@ PODS:
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
   - GTMSessionFetcher/Core (3.3.2)
+  - InputBarAccessoryView (5.5.0):
+    - InputBarAccessoryView/Core (= 5.5.0)
+  - InputBarAccessoryView/Core (5.5.0)
+  - JGProgressHUD (2.2)
   - leveldb-library (1.22.4)
+  - MessageKit (3.8.0):
+    - InputBarAccessoryView (~> 5.5.0)
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
     - nanopb/encode (= 2.30910.0)
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
   - PromisesObjC (2.4.0)
+  - Realm (10.49.1):
+    - Realm/Headers (= 10.49.1)
+  - Realm/Headers (10.49.1)
+  - RealmSwift (10.49.1):
+    - Realm (= 10.49.1)
   - RecaptchaInterop (100.0.0)
+  - SDWebImage (5.19.1):
+    - SDWebImage/Core (= 5.19.1)
+  - SDWebImage/Core (5.19.1)
 
 DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - JGProgressHUD
+  - MessageKit
+  - RealmSwift
+  - SDWebImage
 
 SPEC REPOS:
   trunk:
@@ -130,10 +148,16 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUtilities
     - GTMSessionFetcher
+    - InputBarAccessoryView
+    - JGProgressHUD
     - leveldb-library
+    - MessageKit
     - nanopb
     - PromisesObjC
+    - Realm
+    - RealmSwift
     - RecaptchaInterop
+    - SDWebImage
 
 SPEC CHECKSUMS:
   Firebase: cf09623f98ae25a3ad484e23c7e0e5f464152d80
@@ -148,11 +172,17 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 794d1d2f71fdf77a077a3986258a5c2dac0f9d48
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
+  InputBarAccessoryView: 1d7b0a672b36e370f01f264b3907ef39d03328e3
+  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   leveldb-library: 06a69cc7582d64b29424a63e085e683cc188230a
+  MessageKit: a1ba0c69ebead94029867853eb44dd05b9b3f453
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  Realm: 1fab4a224fd7a294eca142a0efe8b54546290fbf
+  RealmSwift: 7c3a9c001161eb01b96b171ad965a9c498b962b0
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
+  SDWebImage: 40b0b4053e36c660a764958bff99eed16610acbb
 
-PODFILE CHECKSUM: c15668ec1b9bbe5037150854709e941e46de83d5
+PODFILE CHECKSUM: 4616342ea95af47fcf086d1a042145b4ba190291
 
 COCOAPODS: 1.15.2

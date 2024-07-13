@@ -200,7 +200,7 @@ class RegisterViewController: UIViewController {
                 // 用戶已存在
                 self.alertUserLoginError(message: "該電子郵件地址的使用者帳戶似乎已存在。")
                 return
-            }
+            }  
             
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 
