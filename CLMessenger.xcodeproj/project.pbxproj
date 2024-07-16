@@ -23,6 +23,8 @@
 		BD095F7F2C2AA93A00725149 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095F7E2C2AA93A00725149 /* Extensions.swift */; };
 		BD095F812C36CCD200725149 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BD095F802C36CCD200725149 /* GoogleService-Info.plist */; };
 		BD095FA32C3BF91100725149 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095FA22C3BF91100725149 /* DatabaseManager.swift */; };
+		BDBCC8022C44D1AB00541BD6 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = BDBCC8012C44D1AB00541BD6 /* JGProgressHUD */; };
+		BDBCC8052C44D55E00541BD6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBCC8042C44D55E00541BD6 /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,7 @@
 		BD095F7E2C2AA93A00725149 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BD095F802C36CCD200725149 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BD095FA22C3BF91100725149 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		BDBCC8042C44D55E00541BD6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDBCC8022C44D1AB00541BD6 /* JGProgressHUD in Frameworks */,
 				B430D126838B169493E35001 /* Pods_CLMessenger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,6 +122,7 @@
 				BD095F772C2963E400725149 /* VideoPlayerViewController.swift */,
 				BD095F792C29642500725149 /* NewConversationViewController.swift */,
 				BD095F7B2C29643A00725149 /* ProfileViewController.swift */,
+				BDBCC8042C44D55E00541BD6 /* ChatViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -192,6 +197,9 @@
 			dependencies = (
 			);
 			name = CLMessenger;
+			packageProductDependencies = (
+				BDBCC8012C44D1AB00541BD6 /* JGProgressHUD */,
+			);
 			productName = CLMessenger;
 			productReference = BD095F542C284C8600725149 /* CLMessenger.app */;
 			productType = "com.apple.product-type.application";
@@ -220,6 +228,9 @@
 				Base,
 			);
 			mainGroup = BD095F4B2C284C8600725149;
+			packageReferences = (
+				BDBCC8002C44D1AB00541BD6 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
+			);
 			productRefGroup = BD095F552C284C8600725149 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -300,6 +311,7 @@
 				BD095F582C284C8600725149 /* AppDelegate.swift in Sources */,
 				BD095F7C2C29643A00725149 /* ProfileViewController.swift in Sources */,
 				BD095F5A2C284C8600725149 /* SceneDelegate.swift in Sources */,
+				BDBCC8052C44D55E00541BD6 /* ChatViewController.swift in Sources */,
 				BD095F762C2963D500725149 /* PhotoViewerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -378,7 +390,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -435,7 +447,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -533,6 +545,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BDBCC8002C44D1AB00541BD6 /* XCRemoteSwiftPackageReference "JGProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JonasGessner/JGProgressHUD.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BDBCC8012C44D1AB00541BD6 /* JGProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BDBCC8002C44D1AB00541BD6 /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
+			productName = JGProgressHUD;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BD095F4C2C284C8600725149 /* Project object */;
 }

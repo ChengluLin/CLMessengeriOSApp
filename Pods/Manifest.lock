@@ -105,7 +105,6 @@ PODS:
   - InputBarAccessoryView (5.5.0):
     - InputBarAccessoryView/Core (= 5.5.0)
   - InputBarAccessoryView/Core (5.5.0)
-  - JGProgressHUD (2.2)
   - leveldb-library (1.22.4)
   - MessageKit (3.8.0):
     - InputBarAccessoryView (~> 5.5.0)
@@ -129,7 +128,6 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
-  - JGProgressHUD
   - MessageKit
   - RealmSwift
   - SDWebImage
@@ -149,7 +147,6 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMSessionFetcher
     - InputBarAccessoryView
-    - JGProgressHUD
     - leveldb-library
     - MessageKit
     - nanopb
@@ -173,7 +170,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
   InputBarAccessoryView: 1d7b0a672b36e370f01f264b3907ef39d03328e3
-  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   leveldb-library: 06a69cc7582d64b29424a63e085e683cc188230a
   MessageKit: a1ba0c69ebead94029867853eb44dd05b9b3f453
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
@@ -183,6 +179,6 @@ SPEC CHECKSUMS:
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   SDWebImage: 40b0b4053e36c660a764958bff99eed16610acbb
 
-PODFILE CHECKSUM: 4616342ea95af47fcf086d1a042145b4ba190291
+PODFILE CHECKSUM: 0926a11c9e8297c038691026bbb19785092e4b3d
 
 COCOAPODS: 1.15.2

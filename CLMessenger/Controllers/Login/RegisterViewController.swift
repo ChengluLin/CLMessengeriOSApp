@@ -7,8 +7,11 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class RegisterViewController: UIViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -191,6 +194,8 @@ class RegisterViewController: UIViewController {
             return
         }
         
+        spinner.show(in: view)
+        
         // Firebase Login
         
         DatabaseManager.shared.userExists(with: email) { [weak self] exists in
@@ -200,7 +205,11 @@ class RegisterViewController: UIViewController {
                 // 用戶已存在
                 self.alertUserLoginError(message: "該電子郵件地址的使用者帳戶似乎已存在。")
                 return
-            }  
+            }
+            
+            DispatchQueue.main.async {
+                self.spinner.dismiss()
+            }
             
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 
