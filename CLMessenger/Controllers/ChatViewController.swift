@@ -44,27 +44,26 @@ class ChatViewController: MessagesViewController {
                                kind: .text("Hello World message, Hello World message")))
         
         view.backgroundColor = .cyan
-        
+        messageInputBar.sendButton.title = "發送"
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
 
     }
 
-
 }
 
 extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
     func currentSender() -> MessageKit.SenderType {
-        <#code#>
+        return selfSender
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessageKit.MessagesCollectionView) -> MessageKit.MessageType {
-        <#code#>
+        return message[indexPath.section]
     }
     
     func numberOfSections(in messagesCollectionView: MessageKit.MessagesCollectionView) -> Int {
-        <#code#>
+        return message.count
     }
     
     
