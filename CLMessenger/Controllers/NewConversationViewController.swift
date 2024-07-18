@@ -40,10 +40,13 @@ class NewConversationViewController: UIViewController {
         searchBar.delegate = self
         navigationController?.navigationBar.topItem?.titleView = searchBar
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "取消", style: .done, target: self, action: #selector(dismissSelf))
+        
+        searchBar.becomeFirstResponder()
     }
     
    @objc private func dismissSelf() {
-        
+       dismiss(animated: true)
+       
     }
     
 }

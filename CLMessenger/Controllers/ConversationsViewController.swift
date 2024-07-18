@@ -22,6 +22,7 @@ class ConversationsViewController: UIViewController {
     
     private let noConversationsLabel: UILabel = {
         let label = UILabel()
+        label.isHidden = true
         label.text = "沒有聊天記錄"
         label.textAlignment = .center
         label.textColor = .gray
