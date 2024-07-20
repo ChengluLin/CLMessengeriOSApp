@@ -25,6 +25,7 @@
 		BD095FA32C3BF91100725149 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095FA22C3BF91100725149 /* DatabaseManager.swift */; };
 		BDBCC8022C44D1AB00541BD6 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = BDBCC8012C44D1AB00541BD6 /* JGProgressHUD */; };
 		BDBCC8052C44D55E00541BD6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBCC8042C44D55E00541BD6 /* ChatViewController.swift */; };
+		BDBCC8072C48C6CA00541BD6 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBCC8062C48C6CA00541BD6 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		BD095F802C36CCD200725149 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BD095FA22C3BF91100725149 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		BDBCC8042C44D55E00541BD6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		BDBCC8062C48C6CA00541BD6 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 				BD095F592C284C8600725149 /* SceneDelegate.swift */,
 				BD095F7E2C2AA93A00725149 /* Extensions.swift */,
 				BD095FA22C3BF91100725149 /* DatabaseManager.swift */,
+				BDBCC8062C48C6CA00541BD6 /* StorageManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				BD095F5A2C284C8600725149 /* SceneDelegate.swift in Sources */,
 				BDBCC8052C44D55E00541BD6 /* ChatViewController.swift in Sources */,
 				BD095F762C2963D500725149 /* PhotoViewerViewController.swift in Sources */,
+				BDBCC8072C48C6CA00541BD6 /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
