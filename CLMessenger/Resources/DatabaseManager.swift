@@ -40,6 +40,7 @@ extension DatabaseManager {
             print("snapshot：", snapshot.key)
             guard snapshot.value != nil else {
                 completion(false)// 已存在使用者
+                
                 return
             }
             
@@ -60,6 +61,7 @@ extension DatabaseManager {
                 return
             }
             completion(true)
+            
         }
     }
 }
