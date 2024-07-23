@@ -19,6 +19,7 @@ final class DatabaseManager {
         return safeEmail
     }
     
+    
     //    public func test() {
     //
     //        database.child("foo").setValue(["something": true])
