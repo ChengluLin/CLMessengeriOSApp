@@ -19,12 +19,6 @@ final class DatabaseManager {
         return safeEmail
     }
     
-    
-    //    public func test() {
-    //
-    //        database.child("foo").setValue(["something": true])
-    //    }
-    
 }
 
 //MARK: - Account Management
@@ -119,7 +113,30 @@ public enum DatabaseError: Error {
     
 }
 
+//MARK: - Sending message / conversations
 
+extension DatabaseManager {
+    
+    /// 新增新的對話, 發送第一則新訊息的對話資料
+    public func createNewConversation(with otherUserEmail: Message, firstMessage: String, completion: @escaping (Bool) -> Void) {
+        
+    }
+    
+    /// 利用Email取得資料並回傳所也對話資料
+    public func getAllConversations(for email: String, completion: @escaping (Result<String, Error>) -> Void) {
+        
+    }
+    
+    /// 取得指定對話的所有訊息
+    public func getAllMessagesForConversation(with id: String, completion: @escaping (Result<String, Error>) -> Void) {
+        
+    }
+    
+    /// 發送包含目標對話和訊息的訊息
+    public func sendMessage(to conversation: String, message: Message, completion: @escaping (Bool) -> Void) {
+        
+    }
+}
 
 
 struct ChatAppUser {
