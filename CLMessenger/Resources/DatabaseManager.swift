@@ -118,7 +118,7 @@ public enum DatabaseError: Error {
 extension DatabaseManager {
     
     /// 新增新的對話, 發送第一則新訊息的對話資料
-    public func createNewConversation(with otherUserEmail: Message, firstMessage: String, completion: @escaping (Bool) -> Void) {
+    public func createNewConversation(with otherUserEmail: String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
         
     }
     
