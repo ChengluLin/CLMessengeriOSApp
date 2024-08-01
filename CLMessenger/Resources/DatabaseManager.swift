@@ -119,6 +119,92 @@ extension DatabaseManager {
     
     /// 新增新的對話, 發送第一則新訊息的對話資料
     public func createNewConversation(with otherUserEmail: String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
+        guard let currentEmail = UserDefaults.standard.value(forKey: "email") as? String else {
+            return
+        }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: currentEmail)
+        let ref = database.child("\(safeEmail)")
+        ref.observeSingleEvent(of: .value, with: { snapshot in
+            guard var userNode = snapshot.value as? [String: Any] else {
+                completion(false)
+                print("找不到使用者！")
+                return
+            }
+            
+            let messageDate = firstMessage.sentDate
+            let dateString = ChatViewController.dateFormatter.string(from: messageDate)
+            
+            var message = ""
+            
+            switch firstMessage.kind {
+            case .text(let messageText):
+                 message = messageText
+            case .attributedText(_):
+                break
+            case .photo(_):
+                break
+            case .video(_):
+                break
+            case .location(_):
+                break
+            case .emoji(_):
+                break
+            case .audio(_):
+                break
+            case .contact(_):
+                break
+            case .linkPreview(_):
+                break
+            case .custom(_):
+                break
+            }
+            
+            let conversationID = "conversation_\(firstMessage.messageId)"
+            
+            let newConversationData: [String: Any] = [
+                "id": conversationID,
+                "other_user_email": otherUserEmail,
+                "latest_message": [
+                    "date": dateString,
+                    "message": message,
+                    "is_read": false
+                ]
+            ]
+            
+            if var conversations = userNode["conversations"] as? [[String: Any]] {
+                // 對話內容已存在，新增新的對話資訊
+                // 需要新增資料
+                conversations.append(newConversationData)
+                userNode["conversations"] = conversations
+                ref.setValue(userNode) { [weak self] error, _ in
+                    guard error == nil else {
+                        completion(false)
+                        return
+                    }
+                    /// 會回傳是否完成新增Bool
+                    self?.finishCreatingConversation(conversationID: conversationID, firstMessage: firstMessage, completion: completion)
+                }
+            } else {
+                // 對話內容不在，要創建對話內容
+                // 創建對話資料
+                userNode["conversations"] = [
+                    newConversationData
+                ]
+                
+                ref.setValue(userNode) { [weak self] error, _ in
+                    guard error == nil else {
+                        completion(false)
+                        return
+                    }
+                    
+                    /// 會回傳是否完成新增Bool
+                    self?.finishCreatingConversation(conversationID: conversationID, firstMessage: firstMessage, completion: completion)
+                }
+            }
+        })
+    }
+    
+    private func finishCreatingConversation(conversationID: String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
         
     }
     
