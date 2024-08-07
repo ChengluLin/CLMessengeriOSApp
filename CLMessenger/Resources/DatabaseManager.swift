@@ -118,7 +118,7 @@ public enum DatabaseError: Error {
 extension DatabaseManager {
     
     /// 新增新的對話, 發送第一則新訊息的對話資料
-    public func createNewConversation(with otherUserEmail: String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
+    public func createNewConversation(with otherUserEmail: String, name:String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
         guard let currentEmail = UserDefaults.standard.value(forKey: "email") as? String else {
             return
         }
@@ -164,6 +164,7 @@ extension DatabaseManager {
             let newConversationData: [String: Any] = [
                 "id": conversationID,
                 "other_user_email": otherUserEmail,
+                "name": name,
                 "latest_message": [
                     "date": dateString,
                     "message": message,
@@ -182,7 +183,10 @@ extension DatabaseManager {
                         return
                     }
                     /// 會回傳是否完成新增Bool
-                    self?.finishCreatingConversation(conversationID: conversationID, firstMessage: firstMessage, completion: completion)
+                    self?.finishCreatingConversation(name: name,
+                                                     conversationID: conversationID,
+                                                     firstMessage: firstMessage,
+                                                     completion: completion)
                 }
             } else {
                 // 對話內容不在，要創建對話內容
@@ -198,13 +202,16 @@ extension DatabaseManager {
                     }
                     
                     /// 會回傳是否完成新增Bool
-                    self?.finishCreatingConversation(conversationID: conversationID, firstMessage: firstMessage, completion: completion)
+                    self?.finishCreatingConversation(name: name,
+                                                     conversationID: conversationID,
+                                                     firstMessage: firstMessage,
+                                                     completion: completion)
                 }
             }
         })
     }
     
-    private func finishCreatingConversation(conversationID: String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
+    private func finishCreatingConversation(name: String, conversationID: String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
         //        {
         //            "id": String,
         //            "type": text, photo, video
@@ -256,7 +263,8 @@ extension DatabaseManager {
             "content": message,
             "date": dateString,
             "sender_email": currentUserEmail,
-            "is_read": false
+            "is_read": false,
+            "name": name
         ]
         
         let value: [String: Any] = [
