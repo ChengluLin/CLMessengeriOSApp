@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ConversationTableViewCell: UITableViewCell {
+    
+    static let identifier = "ConversationTableViewCell"
     
     private let userImageView: UIImageView = {
        let imageView = UIImageView()
@@ -53,16 +56,29 @@ class ConversationTableViewCell: UITableViewCell {
                                      width: contentView.width - 20 - userImageView.width,
                                      height: (contentView.height-20)/2)
         
-        userNameLabel.frame = CGRect(x: userImageView.right + 10,
-                                     y: 10,
+        userMessageLabel.frame = CGRect(x: userImageView.right + 10,
+                                        y: userNameLabel.bottom + 10,
                                      width: contentView.width - 20 - userImageView.width,
                                      height: (contentView.height-20)/2)
 
      
     }
     
-    public func configure(with model: String) {
+    public func configure(with model: Conversation) {
+        self.userMessageLabel.text = model.latestMessage.text
+        self.userNameLabel.text = model.name
         
+        let path = "images/\(model.otherUserEmail)_profile_picture.png"
+        StorageManager.shared.downloadURL(for: path, completion: { [weak self] result in
+            switch result {
+            case .success(let url):
+                DispatchQueue.main.async {
+                    self?.userImageView.sd_setImage(with: url, completed: nil)
+                }
+            case .failure(let failure):
+                print("取得對方大頭貼失敗", failure, path)
+            }
+        })
     }
 
 //    override func awakeFromNib() {
