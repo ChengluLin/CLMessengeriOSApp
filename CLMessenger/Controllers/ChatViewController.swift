@@ -70,9 +70,11 @@ class ChatViewController: MessagesViewController {
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return nil
         }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        
         return Sender(photoURL: "",
-                      senderId: email,
-                      displayName: "Joe Smith")
+                      senderId: safeEmail,
+                      displayName: "Me")
     }()
     
     init(with email: String, id: String?) {
@@ -80,7 +82,7 @@ class ChatViewController: MessagesViewController {
         self.otherUserEmail = email
         super.init(nibName: nil, bundle: nil)
         if let conversationId = conversationId {
-            listenForMessages(id: conversationId)
+            listenForMessages(id: conversationId, shouldScollToBottom: true)
         }
     }
     
@@ -100,7 +102,7 @@ class ChatViewController: MessagesViewController {
         
     }
     
-    private func listenForMessages(id: String) {
+    private func listenForMessages(id: String, shouldScollToBottom: Bool) {
         DatabaseManager.shared.getAllMessagesForConversation(with: id, completion: { [weak self] result in
             switch result {
             case .success(let messages):
@@ -108,6 +110,14 @@ class ChatViewController: MessagesViewController {
                     return
                 }
                 self?.message = messages
+                DispatchQueue.main.async {
+                    self?.messagesCollectionView.reloadDataAndKeepOffset()
+//                    if shouldScollToBottom {
+//                        self?.messagesCollectionView.scrollToLastItem()
+//                    } else {
+//                        self?.messagesCollectionView.reloadDataAndKeepOffset()
+//                    }
+                }
             case .failure(let error):
                 print("哪取聊天訊息失敗", error)
             }
@@ -173,7 +183,7 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
             return sender
         }
         fatalError("我方資訊為nil, email必須要取得存取")
-        return Sender(photoURL: "", senderId: "12", displayName: "")
+//        return Sender(photoURL: "", senderId: "12", displayName: "")
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessageKit.MessagesCollectionView) -> MessageKit.MessageType {
@@ -183,6 +193,4 @@ extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, Messag
     func numberOfSections(in messagesCollectionView: MessageKit.MessagesCollectionView) -> Int {
         return message.count
     }
-    
-    
 }

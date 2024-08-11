@@ -123,8 +123,10 @@ extension DatabaseManager {
             return
         }
         let safeEmail = DatabaseManager.safeEmail(emailAddress: currentEmail)
+        
         let ref = database.child("\(safeEmail)")
-        ref.observeSingleEvent(of: .value, with: { snapshot in
+        
+        ref.observeSingleEvent(of: .value, with: { [weak self] snapshot in
             guard var userNode = snapshot.value as? [String: Any] else {
                 completion(false)
                 print("找不到使用者！")
@@ -172,6 +174,31 @@ extension DatabaseManager {
                 ]
             ]
             
+            let recipient_newConversationData: [String: Any] = [
+                "id": conversationID,
+                "other_user_email": safeEmail,
+                "name": "Self",
+                "latest_message": [
+                    "date": dateString,
+                    "message": message,
+                    "is_read": false
+                ]
+            ]
+            
+            // 更新接收方的話對內容
+            self?.database.child("\(otherUserEmail)/conversations").observeSingleEvent(of: .value, with: { [weak self] snapshot in
+                if var conversations = snapshot.value as? [[String: Any]] {
+                    // append
+                    conversations.append(recipient_newConversationData)
+                    self?.database.child("\(otherUserEmail)/conversations").setValue(conversationID)
+                } else {
+                    // create
+                    self?.database.child("\(otherUserEmail)/conversations").setValue([recipient_newConversationData])
+                }
+                
+            })
+            
+            // 更新目前使用的對話內容
             if var conversations = userNode["conversations"] as? [[String: Any]] {
                 // 對話內容已存在，新增新的對話資訊
                 // 需要新增資料
@@ -336,12 +363,14 @@ extension DatabaseManager {
                     return nil
                 }
                 
+                let sender = Sender(photoURL: "",
+                                    senderId: senderEmail,
+                                    displayName: name)
                 
-                
-                return Message(sender: <#T##SenderType#>, 
+                return Message(sender: sender, 
                                messageId: messageID,
                                sentDate: date,
-                               kind: <#T##MessageKind#>)
+                               kind: .text(content))
             })
             
             completion(.success(messages))
