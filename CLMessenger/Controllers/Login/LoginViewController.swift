@@ -146,6 +146,23 @@ class LoginViewController: UIViewController {
             
             let user = result.user
             
+            let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+            DatabaseManager.shared.getDataFor(path: safeEmail, completiom: { result in
+                switch result {
+                case .success(let data):
+                    guard let userData = data as? [String: Any],
+                          let firstName = userData["first_name"] as? String,
+                          let lastName = userData["last_name"] as? String else {
+                        return
+                    }
+                    UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "email")
+                    
+                    
+                case .failure(let error):
+                    print("取得data失敗：", error)
+                }
+            })
+            
             UserDefaults.standard.set(email, forKey: "email")
             
             print("Logged In User: \(user)")
