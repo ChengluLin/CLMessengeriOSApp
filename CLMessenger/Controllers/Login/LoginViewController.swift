@@ -155,7 +155,7 @@ class LoginViewController: UIViewController {
                           let lastName = userData["last_name"] as? String else {
                         return
                     }
-                    UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "email")
+                    UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
                     
                     
                 case .failure(let error):

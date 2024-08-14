@@ -134,7 +134,8 @@ extension DatabaseManager {
     
     /// 新增新的對話, 發送第一則新訊息的對話資料
     public func createNewConversation(with otherUserEmail: String, name:String, firstMessage: Message, completion: @escaping (Bool) -> Void) {
-        guard let currentEmail = UserDefaults.standard.value(forKey: "email") as? String else {
+        guard let currentEmail = UserDefaults.standard.value(forKey: "email") as? String,
+              let currentName = UserDefaults.standard.value(forKey: "name") as? String else {
             return
         }
         let safeEmail = DatabaseManager.safeEmail(emailAddress: currentEmail)
@@ -192,7 +193,7 @@ extension DatabaseManager {
             let recipient_newConversationData: [String: Any] = [
                 "id": conversationID,
                 "other_user_email": safeEmail,
-                "name": "Self",
+                "name": currentName,
                 "latest_message": [
                     "date": dateString,
                     "message": message,
