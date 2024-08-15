@@ -161,8 +161,11 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 }
             })
         } else {
+            guard let conversationId = conversationId else {
+                return
+            }
             // 附加到現有對話資料
-            DatabaseManager.shared.sendMessage(to: otherUserEmail, message: message, completion: { success in
+            DatabaseManager.shared.sendMessage(to: conversationId, message: message, completion: { success in
                 if success {
                     print("message send")
                 } else {

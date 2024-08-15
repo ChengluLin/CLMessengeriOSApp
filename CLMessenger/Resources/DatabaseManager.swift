@@ -395,8 +395,63 @@ extension DatabaseManager {
     }
     
     /// 發送包含目標對話和訊息的訊息
-    public func sendMessage(to conversation: String, message: Message, completion: @escaping (Bool) -> Void) {
-        
+    public func sendMessage(to conversation: String, newMessage: Message, completion: @escaping (Bool) -> Void) {
+        // 新增新訊息到原本的對話欄裡面
+        // 更新發送者最新訊息
+        // 更新接收者最新訊息
+        self.database.child("\(conversation)/messages") .observeSingleEvent(of: .value, with: { snapshot in
+            guard var currentMessages = snapshot.value as? [[String: Any]] else {
+                completion(false)
+                return
+            }
+            
+            let messageDate = newMessage.sentDate
+            let dateString = ChatViewController.dateFormatter.string(from: messageDate)
+            
+            var message = ""
+            
+            switch newMessage.kind {
+            case .text(let messageText):
+                message = messageText
+            case .attributedText(_):
+                break
+            case .photo(_):
+                break
+            case .video(_):
+                break
+            case .location(_):
+                break
+            case .emoji(_):
+                break
+            case .audio(_):
+                break
+            case .contact(_):
+                break
+            case .linkPreview(_):
+                break
+            case .custom(_):
+                break
+            }
+            
+            guard let myEmail = UserDefaults.standard.value(forKey: "email") as? String else {
+                completion(false)
+                return
+            }
+            
+            let currentUserEmail = DatabaseManager.safeEmail(emailAddress: myEmail)
+            
+            
+            let collectionMessage: [String: Any] = [
+                "id": firstMessage.messageId,
+                "type": firstMessage.kind.messageKingString,
+                "content": message,
+                "date": dateString,
+                "sender_email": currentUserEmail,
+                "is_read": false,
+                "name": name
+            ]
+            
+        })
     }
 }
 
