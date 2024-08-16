@@ -395,11 +395,22 @@ extension DatabaseManager {
     }
     
     /// 發送包含目標對話和訊息的訊息
-    public func sendMessage(to conversation: String, newMessage: Message, completion: @escaping (Bool) -> Void) {
+    public func sendMessage(to conversation: String, otherUserEmail: String, name: String, newMessage: Message, completion: @escaping (Bool) -> Void) {
         // 新增新訊息到原本的對話欄裡面
         // 更新發送者最新訊息
         // 更新接收者最新訊息
-        self.database.child("\(conversation)/messages") .observeSingleEvent(of: .value, with: { snapshot in
+        
+        guard let myEmail = UserDefaults.standard.value(forKey: "email") as? String else {
+            completion(false)
+            return
+        }
+        
+        let currentEmail = DatabaseManager.safeEmail(emailAddress: myEmail)
+        
+        database.child("\(conversation)/messages") .observeSingleEvent(of: .value, with: { [weak self] snapshot in
+            guard let self = self else {
+                return
+            }
             guard var currentMessages = snapshot.value as? [[String: Any]] else {
                 completion(false)
                 return
@@ -441,9 +452,9 @@ extension DatabaseManager {
             let currentUserEmail = DatabaseManager.safeEmail(emailAddress: myEmail)
             
             
-            let collectionMessage: [String: Any] = [
-                "id": firstMessage.messageId,
-                "type": firstMessage.kind.messageKingString,
+            let newMessageEntry: [String: Any] = [
+                "id": newMessage.messageId,
+                "type": newMessage.kind.messageKingString,
                 "content": message,
                 "date": dateString,
                 "sender_email": currentUserEmail,
@@ -451,6 +462,96 @@ extension DatabaseManager {
                 "name": name
             ]
             
+            currentMessages.append(newMessageEntry)
+            self.database.child("\(conversation)/messages").setValue(currentMessages) { error, _ in
+                guard error == nil else {
+                    completion(false)
+                    return
+                }
+                
+                self.database.child("\(currentEmail)/conversations").observeSingleEvent(of: .value, with: { snapshot in
+                    guard var currentUserConversations = snapshot.value as? [[String: Any]] else {
+                        completion(false)
+                        return
+                    }
+                    
+                    let updatedValue: [String: Any] = [
+                        "date": dateString,
+                        "is_read": false,
+                        "message": message
+                    ]
+                    
+                    var targetConversation: [String: Any]?
+                    
+                    var position = 0
+                    
+                    for conversationDictionary in currentUserConversations {
+                        if let currentId = conversationDictionary["id"] as? String,
+                           currentId == conversation {
+                            targetConversation = conversationDictionary
+                            break
+                        }
+                        
+                        position += 1
+                    }
+                    
+                    targetConversation?["latest_message"] = updatedValue
+                    guard let finalConversation = targetConversation else {
+                        completion(false)
+                        return
+                    }
+                    currentUserConversations[position] = finalConversation
+                    self.database.child("\(currentEmail)/conversations").setValue(currentUserConversations) { error, _ in
+                        guard error == nil else {
+                            completion(false)
+                            return
+                        }
+                        completion(true)
+                    }
+                })
+                
+                // Update latest message for recipient user 更新收件者用戶的最新消息
+                self.database.child("\(otherUserEmail)/conversations").observeSingleEvent(of: .value, with: { snapshot in
+                    guard var otherUserConversations = snapshot.value as? [[String: Any]] else {
+                        completion(false)
+                        return
+                    }
+                    
+                    let updatedValue: [String: Any] = [
+                        "date": dateString,
+                        "is_read": false,
+                        "message": message
+                    ]
+                    
+                    var targetConversation: [String: Any]?
+                    
+                    var position = 0
+                    
+                    for conversationDictionary in otherUserConversations {
+                        if let currentId = conversationDictionary["id"] as? String,
+                           currentId == conversation {
+                            targetConversation = conversationDictionary
+                            break
+                        }
+                        
+                        position += 1
+                    }
+                    
+                    targetConversation?["latest_message"] = updatedValue
+                    guard let finalConversation = targetConversation else {
+                        completion(false)
+                        return
+                    }
+                    otherUserConversations[position] = finalConversation
+                    self.database.child("\(otherUserEmail)/conversations").setValue(otherUserConversations) { error, _ in
+                        guard error == nil else {
+                            completion(false)
+                            return
+                        }
+                        completion(true)
+                    }
+                })
+            }
         })
     }
 }
