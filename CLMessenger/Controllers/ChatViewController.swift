@@ -99,7 +99,54 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messageInputBar.delegate = self
+        setupInputButtion()
         
+    }
+    
+    private func setupInputButtion() {
+        let button = InputBarButtonItem()
+        button.setSize(CGSize(width: 35, height: 35), animated: false)
+        button.setImage(UIImage(systemName: "paperclip"), for: .normal)
+        button.onTouchUpInside { [weak self] _ in
+            self?.presentInputActionSheet()
+        }
+        messageInputBar.setLeftStackViewWidthConstant(to: 36, animated: false)
+        messageInputBar.setStackViewItems([button], forStack: .left, animated: false)
+        
+    }
+    
+    private func presentInputActionSheet() {
+        let actionSheet = UIAlertController(title: "新增媒體",
+                                            message: "你想新增麼項目",
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "照片", style: .default, handler: { [weak self] _ in
+            self?.presentPhotoInputActionsheet()
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "影片", style: .default, handler: { _ in
+            <#code#>
+        }))
+        actionSheet.addAction(UIAlertAction(title: "聲音", style: .default, handler: { _ in
+            <#code#>
+        }))
+        actionSheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true)
+    }
+    
+    private func presentPhotoInputActionsheet() {
+        let actionSheet = UIAlertController(title: "新增照片",
+                                            message: "想新增的方式",
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "相機", style: .default, handler: { [weak self] _ in
+            let picker = UIImagePickerController()
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "相簿", style: .default, handler: { _ in
+        }))
+        actionSheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true)
     }
     
     private func listenForMessages(id: String, shouldScollToBottom: Bool) {
