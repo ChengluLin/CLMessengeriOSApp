@@ -50,6 +50,13 @@ struct Sender: SenderType {
     public var displayName: String
 }
 
+struct Media: MediaItem {
+    var url: URL?
+    var image: UIImage?
+    var placeholderImage: UIImage
+    var size: CGSize
+}
+
 class ChatViewController: MessagesViewController {
     
     public static let dateFormatter: DateFormatter = {
@@ -108,6 +115,7 @@ class ChatViewController: MessagesViewController {
         button.setSize(CGSize(width: 35, height: 35), animated: false)
         button.setImage(UIImage(systemName: "paperclip"), for: .normal)
         button.onTouchUpInside { [weak self] _ in
+            self?.messageInputBar.inputTextView.resignFirstResponder()
             self?.presentInputActionSheet()
         }
         messageInputBar.setLeftStackViewWidthConstant(to: 36, animated: false)
@@ -124,10 +132,10 @@ class ChatViewController: MessagesViewController {
         }))
         
         actionSheet.addAction(UIAlertAction(title: "影片", style: .default, handler: { _ in
-            <#code#>
+        
         }))
         actionSheet.addAction(UIAlertAction(title: "聲音", style: .default, handler: { _ in
-            <#code#>
+        
         }))
         actionSheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         
@@ -140,9 +148,18 @@ class ChatViewController: MessagesViewController {
                                             preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "相機", style: .default, handler: { [weak self] _ in
             let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            picker.delegate = self
+            picker.allowsEditing = true
+            self?.present(picker, animated: true)
         }))
         
-        actionSheet.addAction(UIAlertAction(title: "相簿", style: .default, handler: { _ in
+        actionSheet.addAction(UIAlertAction(title: "相簿", style: .default, handler: { [weak self] _ in
+            let picker = UIImagePickerController()
+            picker.sourceType = .photoLibrary
+            picker.delegate = self
+            picker.allowsEditing = true
+            self?.present(picker, animated: true)
         }))
         actionSheet.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         
@@ -176,6 +193,68 @@ class ChatViewController: MessagesViewController {
         messageInputBar.inputTextView.becomeFirstResponder()
     }
     
+}
+
+extension ChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        picker.dismiss(animated: true)
+
+        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage,
+              let imageData = image.pngData(),
+              let messageID = createMessageID(),
+              let conversationId = conversationId,
+              let name = self.title,
+              let selfSender = selfSender else {
+            return
+        }
+        
+        let fileName = "photo_message_" + messageID
+        
+        // Upload image
+        
+        StorageManager.shared.uploadMessagePhoto(with: imageData, fileName: fileName, completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let urlString):
+                // Ready to send message 成功傳送訊息
+                print("Uploaded Message Photo:", urlString)
+                
+                guard let url = URL(string: urlString),
+                      let placeholder = UIImage(systemName: "plus") else {
+                    return
+                }
+                
+                
+                let media = Media(url: url,
+                                  image: nil,
+                                  placeholderImage: placeholder,
+                                  size: .zero)
+                
+                let message = Message(sender: selfSender,
+                                      messageId: messageID,
+                                      sentDate: Date(),
+                                      kind: .photo(media))
+                
+                DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: self.otherUserEmail, name: name, newMessage: message) { success in
+                    if success {
+                        print("成功傳送訊息圖片")
+                    } else {
+                        print("傳送訊息圖片失敗")
+                    }
+                }
+                
+            case .failure(let error):
+                print("訊息圖片上傳失敗:", error)
+            }
+        })
+        // Send Message
+        
+    }
 }
 
 extension ChatViewController: InputBarAccessoryViewDelegate {

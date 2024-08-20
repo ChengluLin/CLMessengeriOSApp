@@ -426,7 +426,10 @@ extension DatabaseManager {
                 message = messageText
             case .attributedText(_):
                 break
-            case .photo(_):
+            case .photo(let mediaItem):
+                if let targetUrlStriing = mediaItem.url?.absoluteString {
+                    message = targetUrlStriing
+                }
                 break
             case .video(_):
                 break
@@ -469,6 +472,7 @@ extension DatabaseManager {
                     return
                 }
                 
+                // Update latest message for me 更新使用者最新消息
                 self.database.child("\(currentEmail)/conversations").observeSingleEvent(of: .value, with: { snapshot in
                     guard var currentUserConversations = snapshot.value as? [[String: Any]] else {
                         completion(false)

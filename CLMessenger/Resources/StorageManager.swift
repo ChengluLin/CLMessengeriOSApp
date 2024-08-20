@@ -20,6 +20,7 @@ final class StorageManager {
     public typealias UploadPictureCompletion = (Result<String, Error>) -> Void
     
     /// Uploads picture to firebase storage and returns completion with url string to download
+    /// 上傳圖片到 Firebase Storage 並在完成後返回可下載的 URL 字串
     public func uploadProfilePicture(with data: Data, fileName: String, completion: @escaping UploadPictureCompletion) {
         storage.child("images/\(fileName)").putData(data, metadata: nil) { metadata, error in
             guard error == nil else {
@@ -30,6 +31,31 @@ final class StorageManager {
             }
             
             self.storage.child("images/\(fileName)").downloadURL { url, error in
+                guard let url = url else {
+                    print("拿取下載檔案時失敗")
+                    completion(.failure(StorageErrors.failedToGetDownloadUrl))
+                    return
+                }
+                
+                let urlString = url.absoluteString
+                print("download url returned: \(urlString)")
+                completion(.success(urlString))
+            }
+        }
+    }
+    
+    /// Upload image that will be sent in a conversation message
+    /// 上傳將在對話訊息中傳送的圖片
+    public func uploadMessagePhoto(with data: Data, fileName: String, completion: @escaping UploadPictureCompletion) {
+        storage.child("message_images/\(fileName)").putData(data, metadata: nil) { metadata, error in
+            guard error == nil else {
+                // failed
+                print("上傳至Firebase相片檔案錯誤")
+                completion(.failure(StorageErrors.failedToUpload))
+                return
+            }
+            
+            self.storage.child("message_images/\(fileName)").downloadURL { url, error in
                 guard let url = url else {
                     print("拿取下載檔案時失敗")
                     completion(.failure(StorageErrors.failedToGetDownloadUrl))
