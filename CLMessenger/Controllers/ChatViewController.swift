@@ -9,6 +9,8 @@ import UIKit
 import MessageKit
 import InputBarAccessoryView
 import SDWebImage
+import AVFoundation
+import AVKit
 
 struct Message: MessageType {
     public var sender: SenderType
@@ -287,6 +289,7 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
             let fileName = "photo_message_" + messageID.replacingOccurrences(of: " ", with: "-") + ".mov"
             
             // 上傳影片
+            // TODO: 取得影片初始畫面
             
             StorageManager.shared.uploadMessageVideo(with: videoUrl, fileName: fileName, completion: { [weak self] result in
                 guard let self = self else { return }
@@ -442,6 +445,13 @@ extension ChatViewController: MessageCellDelegate {
             let vc = PhotoViewerViewController(with: imageUrl)
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
+        case .video(let media):
+            guard let videoUrl = media.url else {
+                return
+            }
+            let vc = AVPlayerViewController()
+            vc.player = AVPlayer(url: videoUrl)
+            present(vc, animated: true)
         default:
             break
         }
