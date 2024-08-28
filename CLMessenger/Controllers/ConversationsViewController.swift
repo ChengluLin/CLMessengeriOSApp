@@ -35,6 +35,8 @@ class ConversationsViewController: UIViewController {
         return table
     }()
     
+    private var loginObserver: NSObjectProtocol?
+    
     private let noConversationsLabel: UILabel = {
         let label = UILabel()
         label.isHidden = true
@@ -53,26 +55,43 @@ class ConversationsViewController: UIViewController {
         setupTableView()
         fetchConversatioins()
         startListeningForConversations()
+        
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
+            guard let self = self else { return }
+            self.startListeningForConversations()
+        })
     }
     
     private func startListeningForConversations() {
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return
         }
+        
+        if let observer = loginObserver { // 取消監聽
+            NotificationCenter.default.removeObserver(observer)
+        }
+        
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        
         DatabaseManager.shared.getAllConversations(for: safeEmail) { [weak self] result in
             switch result {
             case .success(let conversations):
                 guard !conversations.isEmpty else {
+                    self?.tableView.isHidden = true
+                    self?.noConversationsLabel.isHidden = false
                     return
                 }
+                self?.noConversationsLabel.isHidden = true
+                self?.tableView.isHidden = false
                 self?.conversations = conversations
                 
-//                DispatchQueue.main.sync {
+                DispatchQueue.main.async {
                     self?.tableView.reloadData()
-//                }
+                }
                 
             case .failure(let error):
+                self?.tableView.isHidden = true
+                self?.noConversationsLabel.isHidden = false
                 print("取得對話聊天記錄失敗", error)
             }
         }
