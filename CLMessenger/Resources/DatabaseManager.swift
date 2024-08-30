@@ -601,6 +601,46 @@ extension DatabaseManager {
             }
         })
     }
+    // 刪除聊天列表
+    public func deleConversation(conversationId: String, completion: @escaping (Bool) -> Void) {
+        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
+            return
+        }
+        
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        
+        print("Deleting conversation with id: \(conversationId)")
+        
+        // 取得目前使用者的所有對話
+        
+        // 刪除集合中具有目標 ID 的對話
+        
+        // 在資料庫中重置使用者的這些對話
+        let ref = database.child("\(safeEmail)/conversations")
+        ref.observeSingleEvent(of: .value) { snapshot in
+            if var conversations = snapshot.value as? [[String: Any]] {
+                var positionToRemove = 0
+                for conversation in conversations {
+                    if let id = conversation["id"] as? String,
+                       id == conversationId {
+                        print("找到要刪除的項目ID")
+                        break
+                    }
+                    positionToRemove += 1
+                }
+                
+                conversations.remove(at: positionToRemove)
+                ref.setValue(conversations, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        print("無法寫入，刪除後更新名單")
+                        return
+                    }
+                    print("已刪除列表名單")
+                    completion(true)
+                })
+            }
+        }
+    }
 }
 
 
