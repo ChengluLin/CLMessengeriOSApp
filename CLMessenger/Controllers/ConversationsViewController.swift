@@ -187,11 +187,17 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // 開始刪除
+            
+            let conversationId = conversations[indexPath.row].id
+            
             tableView.beginUpdates()
             
-            conversations.remove(at: indexPath.row)
-            
-            tableView.deleteRows(at: [indexPath], with: .left)
+            DatabaseManager.shared.deleConversation(conversationId: conversationId) { [weak self] success in
+                if success {
+                    self?.conversations.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .left)
+                }
+            }
             
             tableView.endUpdates()
         }
