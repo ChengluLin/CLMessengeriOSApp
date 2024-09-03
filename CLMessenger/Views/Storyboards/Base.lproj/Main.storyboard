@@ -47,7 +47,7 @@
         <scene sceneID="yV4-KJ-uei">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hfB-Hx-aqf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="聊天" id="VnX-Ay-ATQ"/>
+                    <tabBarItem key="tabBarItem" title="聊天" image="message" catalog="system" id="VnX-Ay-ATQ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="rhf-77-l3Z">
                         <rect key="frame" x="0.0" y="59" width="393" height="96"/>
@@ -66,7 +66,7 @@
         <scene sceneID="mhv-Ck-q2f">
             <objects>
                 <navigationController id="Rdy-Ic-zad" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="我的" id="qrf-E7-s2O"/>
+                    <tabBarItem key="tabBarItem" title="我的" image="person.circle" catalog="system" id="qrf-E7-s2O"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="lz2-Aa-N80">
                         <rect key="frame" x="0.0" y="59" width="393" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -112,6 +112,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="message" catalog="system" width="128" height="116"/>
+        <image name="person.circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

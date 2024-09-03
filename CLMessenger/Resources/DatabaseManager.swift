@@ -207,7 +207,7 @@ extension DatabaseManager {
                 if var conversations = snapshot.value as? [[String: Any]] {
                     // append
                     conversations.append(recipient_newConversationData)
-                    self?.database.child("\(otherUserEmail)/conversations").setValue(conversationID)
+                    self?.database.child("\(otherUserEmail)/conversations").setValue(conversations)
                 } else {
                     // create
                     self?.database.child("\(otherUserEmail)/conversations").setValue([recipient_newConversationData])
@@ -640,6 +640,17 @@ extension DatabaseManager {
                 })
             }
         }
+    }
+    
+    // 檢查對話是否存在
+    public func conversationExists(with targetRecipientEmail: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let safeRecipientEmail = DatabaseManager.safeEmail(emailAddress: targetRecipientEmail)
+        guard let senderEmail = UserDefaults.standard.value(forKey: "email") as? String else {
+            return
+        }
+        let safeSenderEmail = DatabaseManager.safeEmail(emailAddress: senderEmail)
+        
+        
     }
 }
 

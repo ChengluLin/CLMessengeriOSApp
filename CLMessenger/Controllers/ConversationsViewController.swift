@@ -100,7 +100,22 @@ class ConversationsViewController: UIViewController {
     @objc private func didTapComposeButton() {
         let vc = NewConversationViewController()
         vc.completion = { [weak self] result in
-            self?.createNewConversation(result: result)
+            guard let self = self else {
+                return
+            }
+            
+            let currentConversations = self.conversations
+            if let targetConversation = currentConversations.first(where: { $0.otherUserEmail == DatabaseManager.safeEmail(emailAddress: result.email)
+            }) { // 有對話紀錄的情況下，顯示舊有的紀錄
+                let vc = ChatViewController(with: targetConversation.otherUserEmail, id: targetConversation.id)
+                vc.isNewConversation = false
+                vc.title = targetConversation.name
+                vc.navigationItem.largeTitleDisplayMode = .never
+                self.navigationController?.pushViewController(vc, animated: true)
+            } else { // 若沒對話紀錄則新創一個對話紀錄
+                self.createNewConversation(result: result)
+            }
+            
         }
         let navVC = UINavigationController(rootViewController: vc)
         present(navVC, animated: true)
@@ -168,6 +183,10 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let model = conversations[indexPath.row]
+        openConversation(model)
+    }
+    
+    func openConversation(_ model: Conversation) {
         let vc = ChatViewController(with: model.otherUserEmail, id: model.id)
 //        vc.isNewConversation = false
         vc.title = model.name
