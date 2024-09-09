@@ -37,7 +37,7 @@ class LoginViewController: UIViewController {
         field.placeholder = "輸入Email..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemGroupedBackground
         return field
     }()
     
@@ -52,7 +52,7 @@ class LoginViewController: UIViewController {
         field.placeholder = "輸入密碼..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemGroupedBackground
         field.isSecureTextEntry = true
         return field
     }()
@@ -82,7 +82,7 @@ class LoginViewController: UIViewController {
         })
         
         title = "Log In"
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",
                                                             style: .done,

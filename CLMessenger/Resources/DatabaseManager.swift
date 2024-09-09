@@ -659,7 +659,7 @@ extension DatabaseManager {
         
         // 刪除集合中具有目標 ID 的對話
         
-        // 在資料庫中重置使用者的這些對話
+        // 在資料庫中重置使用者的這些對話ø
         let ref = database.child("\(safeEmail)/conversations")
         ref.observeSingleEvent(of: .value) { snapshot in
             if var conversations = snapshot.value as? [[String: Any]] {
