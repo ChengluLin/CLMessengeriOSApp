@@ -159,9 +159,34 @@ class ChatViewController: MessagesViewController {
         let vc = LocationPickerViewController()
         vc.navigationItem.largeTitleDisplayMode = .never
         vc.completion = { [weak self] selectedCoorindates in
+            guard let self = self else { return }
+            
+            guard let messageID = self.createMessageID(),
+                  let conversationId = conversationId,
+                  let name = self.title,
+                  let selfSender = self.selfSender else {
+                return
+            }
+            
             let longitude: Double = selectedCoorindates.longitude
             let latitude: Double = selectedCoorindates.latitude
             print("long=\(longitude) | lat=\(latitude)")
+            
+            let location = Location(location: CLLocation(latitude: latitude, longitude: longitude),
+                                 size: .zero)
+            
+            let message = Message(sender: selfSender,
+                                  messageId: messageID,
+                                  sentDate: Date(),
+                                  kind: .location(location))
+            
+            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: self.otherUserEmail, name: name, newMessage: message) { success in
+                if success {
+                    print("成功傳送訊息位置")
+                } else {
+                    print("位置訊息圖片失敗")
+                }
+            }
         }
         navigationController?.pushViewController(vc, animated: true)
     }

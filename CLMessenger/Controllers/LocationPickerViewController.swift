@@ -40,6 +40,7 @@ class LocationPickerViewController: UIViewController {
         guard let coordinates = coordinates else {
             return
         }
+        navigationController?.popViewController(animated: true)
         completion?(coordinates)
 
     }
