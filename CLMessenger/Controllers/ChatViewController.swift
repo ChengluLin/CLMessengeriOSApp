@@ -390,7 +390,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
             return
         }
         
-        print("Sending: \(text)")
+        print("Sending: \(text)", isNewConversation)
         
         let message = Message(sender: selfSender,
                               messageId: messageId,
@@ -405,7 +405,10 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 if success {
                     print("已傳送訊息")
                     self?.isNewConversation = false
-                    
+                    let newConversationID = "conversation_\(message.messageId)"
+                    self?.conversationId = newConversationID
+                    self?.listenForMessages(id: newConversationID, shouldScollToBottom: true)
+
                 } else {
                     print("傳送失敗")
                 }

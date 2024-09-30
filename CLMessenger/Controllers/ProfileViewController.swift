@@ -47,6 +47,10 @@ class ProfileViewController: UIViewController {
                                                 handler: { [weak self] _ in
                 guard let self = self else { return }
                 
+                // 移除暫存Email, name
+                UserDefaults.standard.setValue(nil, forKey: "email")
+                UserDefaults.standard.setValue(nil, forKey: "name")
+                
                 do {
                     try FirebaseAuth.Auth.auth().signOut()
                     

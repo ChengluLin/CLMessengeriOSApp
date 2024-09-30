@@ -128,7 +128,7 @@ class ConversationsViewController: UIViewController {
         // check in database if conversation with these two users exists檢查資料庫中是否存在與這兩個使用者的對話
         // if it does, reuse conversation id 如果是，則重複使用對話 ID
         // otherwise use existing code 否則使用現有程式碼
-        
+        print("createNewConversation的email", email)
         DatabaseManager.shared.conversationExists(with: email) { [weak self] result in
             guard let self = self else { return }
             

@@ -709,7 +709,7 @@ extension DatabaseManager {
             return
         }
         let safeSenderEmail = DatabaseManager.safeEmail(emailAddress: senderEmail)
-        
+        print("safeRecipientEmailXXXX", safeRecipientEmail)
         database.child("\(safeRecipientEmail)/conversations").observeSingleEvent(of: .value, with: { snapshot in
             guard let collection = snapshot.value as? [[String: Any]] else {
                 completion(.failure(DatabaseError.failedToFetch))
@@ -731,6 +731,9 @@ extension DatabaseManager {
                 completion(.success(id))
                 return
             }
+            
+            completion(.failure(DatabaseError.failedToFetch))
+            return
             
         })
         
