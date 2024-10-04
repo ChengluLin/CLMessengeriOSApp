@@ -408,6 +408,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                     let newConversationID = "conversation_\(message.messageId)"
                     self?.conversationId = newConversationID
                     self?.listenForMessages(id: newConversationID, shouldScollToBottom: true)
+                    self?.messageInputBar.inputTextView.text = nil
 
                 } else {
                     print("傳送失敗")
@@ -419,9 +420,11 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 return
             }
             // 附加到現有對話資料
-            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail,name: name, newMessage: message, completion: { success in
+            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail,name: name, newMessage: message, completion: { [weak self] success in
                 if success {
                     print("message send")
+                    self?.messageInputBar.inputTextView.text = nil
+
                 } else {
                     print("failed to send")
                 }

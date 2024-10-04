@@ -229,8 +229,7 @@ class RegisterViewController: UIViewController {
                     }
                 }
                 
-                guard authResult != nil,
-                    error == nil else {
+                guard authResult != nil, error == nil else {
                     print("Error cureationg user")
                     return
                 }
