@@ -26,7 +26,7 @@ final class DatabaseManager {
 extension DatabaseManager {
     
     public func getDataFor(path: String, completiom: @escaping (Result<Any, Error>) -> Void) {
-        self.database.child("\(path)").observeSingleEvent(of: .value) { snapshot in
+        database.child("\(path)").observeSingleEvent(of: .value) { snapshot in
             guard let value = snapshot.value else {
                 completiom(.failure(DatabaseError.failedToFetch))
                 return
@@ -66,14 +66,15 @@ extension DatabaseManager {
         database.child(user.safeEmail).setValue([
             "first_name": user.firstName,
             "last_name": user.lastName
-        ]) { error, _ in
+        ]) { [weak self] error, _ in
+            guard let self = self else { return }
             guard error == nil else {
                 print("寫進database失敗！")
                 completion(false)
                 return
             }
             
-            self.database.child("users").observeSingleEvent(of: .value) { snapshot in
+            self.database.child("users").observeSingleEvent(of: .value) { [weak self] snapshot in
                 if var userCollection = snapshot.value as? [[String: String]] {
                     // 增加用戶資料
                     let newElement = [
@@ -82,7 +83,7 @@ extension DatabaseManager {
                     ]
                     userCollection.append(newElement)
                     
-                    self.database.child("users").setValue(userCollection) { error, _ in
+                    self?.database.child("users").setValue(userCollection) { error, _ in
                         guard error == nil else {
                             completion(false)
                             return
@@ -99,7 +100,7 @@ extension DatabaseManager {
                         ]
                     ]
                     
-                    self.database.child("users").setValue(newCollection) { error, _ in
+                    self?.database.child("users").setValue(newCollection) { error, _ in
                         guard error == nil else {
                             completion(false)
                             return

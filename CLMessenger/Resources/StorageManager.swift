@@ -22,7 +22,8 @@ final class StorageManager {
     /// Uploads picture to firebase storage and returns completion with url string to download
     /// 上傳圖片到 Firebase Storage 並在完成後返回可下載的 URL 字串
     public func uploadProfilePicture(with data: Data, fileName: String, completion: @escaping UploadPictureCompletion) {
-        storage.child("images/\(fileName)").putData(data, metadata: nil) { metadata, error in
+        storage.child("images/\(fileName)").putData(data, metadata: nil) { [weak self] metadata, error in
+            guard let self = self else { return }
             guard error == nil else {
                 // failed
                 print("上傳至Firebase相片檔案錯誤")
