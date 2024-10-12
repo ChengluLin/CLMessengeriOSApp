@@ -217,13 +217,22 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
             // 開始刪除
             
             let conversationId = conversations[indexPath.row].id
-            
             tableView.beginUpdates()
-            
+            self.conversations.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
+
             DatabaseManager.shared.deleConversation(conversationId: conversationId) { [weak self] success in
-                if success {
-                    self?.conversations.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .left)
+                if !success {
+                    
+                    // 把原來的資料增加回來
+//                    guard let count = self?.conversations.count else {
+//                        return
+//                    }
+//                    if count >= indexPath.row {
+//                        self?.conversations.remove(at: indexPath.row)
+//                    }
+//                    
+//                    tableView.deleteRows(at: [indexPath], with: .left)
                 }
             }
             

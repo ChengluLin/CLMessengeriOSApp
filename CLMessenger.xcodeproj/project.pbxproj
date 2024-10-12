@@ -17,7 +17,6 @@
 		BD095F722C29639C00725149 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095F712C29639C00725149 /* LoginViewController.swift */; };
 		BD095F742C2963BD00725149 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095F732C2963BD00725149 /* RegisterViewController.swift */; };
 		BD095F762C2963D500725149 /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095F752C2963D500725149 /* PhotoViewerViewController.swift */; };
-		BD095F782C2963E400725149 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095F772C2963E400725149 /* VideoPlayerViewController.swift */; };
 		BD095F7A2C29642500725149 /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095F792C29642500725149 /* NewConversationViewController.swift */; };
 		BD095F7C2C29643A00725149 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095F7B2C29643A00725149 /* ProfileViewController.swift */; };
 		BD095F7F2C2AA93A00725149 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD095F7E2C2AA93A00725149 /* Extensions.swift */; };
@@ -27,6 +26,8 @@
 		BD1A76BF2C8F309000D8E5AF /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A76BE2C8F309000D8E5AF /* LocationPickerViewController.swift */; };
 		BD1A76C12CB52C7700D8E5AF /* ConversationsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A76C02CB52C7700D8E5AF /* ConversationsModels.swift */; };
 		BD1A76C32CB52CAB00D8E5AF /* ChatModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A76C22CB52CAB00D8E5AF /* ChatModels.swift */; };
+		BD1A76C52CB7AD3700D8E5AF /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A76C42CB7AD3700D8E5AF /* SearchResult.swift */; };
+		BD1A76C72CB7AD8500D8E5AF /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A76C62CB7AD8500D8E5AF /* ProfileViewModel.swift */; };
 		BDBCC8022C44D1AB00541BD6 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = BDBCC8012C44D1AB00541BD6 /* JGProgressHUD */; };
 		BDBCC8052C44D55E00541BD6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBCC8042C44D55E00541BD6 /* ChatViewController.swift */; };
 		BDBCC8072C48C6CA00541BD6 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBCC8062C48C6CA00541BD6 /* StorageManager.swift */; };
@@ -48,7 +49,6 @@
 		BD095F712C29639C00725149 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BD095F732C2963BD00725149 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		BD095F752C2963D500725149 /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
-		BD095F772C2963E400725149 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		BD095F792C29642500725149 /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		BD095F7B2C29643A00725149 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BD095F7E2C2AA93A00725149 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -58,6 +58,8 @@
 		BD1A76BE2C8F309000D8E5AF /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
 		BD1A76C02CB52C7700D8E5AF /* ConversationsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsModels.swift; sourceTree = "<group>"; };
 		BD1A76C22CB52CAB00D8E5AF /* ChatModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModels.swift; sourceTree = "<group>"; };
+		BD1A76C42CB7AD3700D8E5AF /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		BD1A76C62CB7AD8500D8E5AF /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		BDBCC8042C44D55E00541BD6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		BDBCC8062C48C6CA00541BD6 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		BDBCC8082C621E6200541BD6 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
@@ -131,7 +133,6 @@
 				BD095F5B2C284C8600725149 /* ConversationsViewController.swift */,
 				BD095F7D2C2A654E00725149 /* Login */,
 				BD095F752C2963D500725149 /* PhotoViewerViewController.swift */,
-				BD095F772C2963E400725149 /* VideoPlayerViewController.swift */,
 				BD095F792C29642500725149 /* NewConversationViewController.swift */,
 				BD095F7B2C29643A00725149 /* ProfileViewController.swift */,
 				BDBCC8042C44D55E00541BD6 /* ChatViewController.swift */,
@@ -155,6 +156,8 @@
 			children = (
 				BD1A76C02CB52C7700D8E5AF /* ConversationsModels.swift */,
 				BD1A76C22CB52CAB00D8E5AF /* ChatModels.swift */,
+				BD1A76C42CB7AD3700D8E5AF /* SearchResult.swift */,
+				BD1A76C62CB7AD8500D8E5AF /* ProfileViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -320,14 +323,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD095F722C29639C00725149 /* LoginViewController.swift in Sources */,
+				BD1A76C72CB7AD8500D8E5AF /* ProfileViewModel.swift in Sources */,
 				BD1A76BD2C7C51C100D8E5AF /* NewConversationCell.swift in Sources */,
 				BD095F742C2963BD00725149 /* RegisterViewController.swift in Sources */,
 				BD1A76C32CB52CAB00D8E5AF /* ChatModels.swift in Sources */,
 				BD095F7A2C29642500725149 /* NewConversationViewController.swift in Sources */,
 				BD095F5C2C284C8600725149 /* ConversationsViewController.swift in Sources */,
-				BD095F782C2963E400725149 /* VideoPlayerViewController.swift in Sources */,
 				BD095FA32C3BF91100725149 /* DatabaseManager.swift in Sources */,
 				BD095F7F2C2AA93A00725149 /* Extensions.swift in Sources */,
+				BD1A76C52CB7AD3700D8E5AF /* SearchResult.swift in Sources */,
 				BD095F582C284C8600725149 /* AppDelegate.swift in Sources */,
 				BD095F7C2C29643A00725149 /* ProfileViewController.swift in Sources */,
 				BD095F5A2C284C8600725149 /* SceneDelegate.swift in Sources */,
